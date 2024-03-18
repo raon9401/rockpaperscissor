@@ -41,7 +41,7 @@ function App() {
   const randomChoice = () => {
     // Object.keys : key값을 가지고 배열을 만들어줌
     let itemArray = Object.keys(choice);
-    console.log(itemArray);
+    // console.log(itemArray);
     
     // Math.random(); - 0~1 사이 랜덤한 값을 가져옴
     let randomItem = Math.floor(Math.random()*itemArray.length);
