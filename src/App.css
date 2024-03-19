@@ -18,6 +18,8 @@
 }
 
 .box {
+    position: relative;
+
     width: 200px;
     height: 250px;
 
@@ -26,6 +28,20 @@
     justify-content: center;
     align-items: center;
     border: 3px solid black;
+    border-radius: 30px;
+    box-shadow: 1px 1px 5px 1px gray;
+}
+
+.box>h1 {
+    position: absolute;
+    top: 0px;
+    margin: 0;
+}
+
+.box>h2 {
+    position: absolute;
+    bottom: 0px;
+    margin: 0;
 }
 
 .box>img {
