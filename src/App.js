@@ -34,8 +34,9 @@ const choice = {
 
 function App() {
 
-  const [userSelect, setUserSelect] = useState(choice.scissor);
+  const [userSelect, setUserSelect] = useState(null);
   const [computerSelect, setComputerSelect] = useState(null);
+  const [result, setResult] = useState("");
 
   // computer Random Logic
   const randomChoice = () => {
@@ -44,29 +45,54 @@ function App() {
     
     // Math.random(); - 0~1 사이 랜덤한 값을 가져옴
     let randomItem = Math.floor(Math.random()*itemArray.length);
-    let result = itemArray[randomItem];
+    let final = itemArray[randomItem];
 
-    return choice[result];
+    return choice[final];
   }
 
-  const select = (choiceText) =>{
+  const judgement = (user, computer) => {
+    // 1. user가 'Rock'일 경우
+    // - user의 값 : 가위(Win), 바위(Tie), 보(Lose)
+    // - computer의 값 : 가위(Lose), 바위(Tie), 보(Win)
+    // 2. user가 'Scissor'일 경우
+    // - user의 값 : 가위(Tie), 바위(Lose), 보(Win)
+    // - computer의 값 : 가위(Tie), 바위(Win), 보(Lose)
+    // 3. user가 'Paper'일 경우
+    // - user의 값 : 가위(Lose), 바위(Win), 보(Tie)
+    // - computer의 값 : 가위(Win), 바위(Lose), 보(Tie)
+
+    if(user.name === computer.name ){
+      return "Tie";
+    } else if(user.name === "Rock"){
+      return computer.name === "Scissor" ?  "Win" :  "Lose";
+    } else if(user.name === "Scissor"){
+      return computer.name === "Paper" ?  "Win" :  "Lose";
+    } else if(user.name === "Paper"){
+      return computer.name === "Rock" ?  "Win" :  "Lose";
+    }
+  }
+
+  const play = (choiceText) =>{
     setUserSelect(choice[choiceText]);
 
     // computer Random Logic
     let computerChoice = randomChoice();
     setComputerSelect(computerChoice);
+
+    setResult(judgement(choice[choiceText], computerChoice));
   }
+
 
   return (
     <div className='main'>
       <div className="img-wrap">  
-        <Box name="user" item={userSelect}/>
-        <Box name="computer" item={computerSelect}/>
+        <Box name="user" item={userSelect} result={result}/>
+        <Box name="computer" item={computerSelect} result={result}/>
       </div>
-      <div>
-        <SelectBtn text="scissor" select={select}/>
-        <SelectBtn text="rock" select={select}/>
-        <SelectBtn text="paper" select={select}/>
+      <div className='btn-wrap'>
+        <SelectBtn value="scissor" img={choice.scissor.img} select={play}/>
+        <SelectBtn value="rock" img={choice.rock.img} select={play}/>
+        <SelectBtn value="paper" img={choice.paper.img} select={play}/>
       </div>
     </div>
   );
