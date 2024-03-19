@@ -12,11 +12,18 @@
     gap: 10px;
 }
 
-.img-wrap {
+.contents-wrap {
     display: flex;
     gap: 30px;
     /* width: 300px;
     height: 270px; */
+}
+
+.img-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .box {
@@ -93,11 +100,26 @@
     background-color: white;
 }
 
-.btn:active {
+button:active {
     background-color: bisque;
     scale: 90%;
 }
 
 .btn>img {
     width: 30px;
+}
+
+/* Score */
+.score-wrap {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Reset Btn */
+.reset-btn {
+    cursor: pointer;
+    height: 40px;
+    border-radius: 15px;
+
+    background-color: orange;
 }

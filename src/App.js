@@ -7,6 +7,8 @@ import { useState } from 'react';
 // Component
 import Box from './component/Box';
 import SelectBtn from './component/SelectBtn';
+import Score from './component/Score';
+import ResetBtn from './component/ResetBtn';
 
 // 1. Box 2개(타이틀, 사진, 결과)
 //    - user Box, computer Box
@@ -38,6 +40,9 @@ function App() {
   const [computerSelect, setComputerSelect] = useState(null);
   const [result, setResult] = useState("");
 
+  const [scoreNumber, setScoreNumber] = useState({user:0, computer:0});
+
+
   // computer Random Logic
   const randomChoice = () => {
     // Object.keys : key값을 가지고 배열을 만들어줌
@@ -51,6 +56,7 @@ function App() {
   }
 
   const judgement = (user, computer) => {
+    let gameResult;
     // 1. user가 'Rock'일 경우
     // - user의 값 : 가위(Win), 바위(Tie), 보(Lose)
     // - computer의 값 : 가위(Lose), 바위(Tie), 보(Win)
@@ -62,14 +68,21 @@ function App() {
     // - computer의 값 : 가위(Win), 바위(Lose), 보(Tie)
 
     if(user.name === computer.name ){
-      return "Tie";
+      gameResult = "Tie";
     } else if(user.name === "Rock"){
-      return computer.name === "Scissor" ?  "Win" :  "Lose";
+      gameResult = computer.name === "Scissor" ?  "Win" :  "Lose";
     } else if(user.name === "Scissor"){
-      return computer.name === "Paper" ?  "Win" :  "Lose";
+      gameResult = computer.name === "Paper" ?  "Win" :  "Lose";
     } else if(user.name === "Paper"){
-      return computer.name === "Rock" ?  "Win" :  "Lose";
+      gameResult = computer.name === "Rock" ?  "Win" :  "Lose";
     }
+      
+    if(gameResult === "Win"){
+      setScoreNumber({user:scoreNumber.user+1,computer:scoreNumber.computer})
+    } else if(gameResult === "Lose"){
+      setScoreNumber({user:scoreNumber.user,computer:scoreNumber.computer+1})
+    }
+    return gameResult;
   }
 
   const play = (choiceText) =>{
@@ -80,19 +93,38 @@ function App() {
     setComputerSelect(computerChoice);
 
     setResult(judgement(choice[choiceText], computerChoice));
+
+  }
+
+  const handleReset = () => {
+    setUserSelect(null);
+    setComputerSelect(null);
+    setResult("");
+    setScoreNumber({user:0,computer:0});
   }
 
 
   return (
     <div className='main'>
-      <div className="img-wrap">  
-        <Box name="user" item={userSelect} result={result}/>
-        <Box name="computer" item={computerSelect} result={result}/>
+      {/* Game Img */}
+      <div className="contents-wrap">
+        <div className='img-wrap'>
+          <Score score={scoreNumber.user}/>
+          <Box name="user" item={userSelect} result={result}/>
+        </div>
+        <div className='img-wrap'>
+          <Score score={scoreNumber.computer}/>
+          <Box name="computer" item={computerSelect} result={result}/>
+        </div>
       </div>
+      {/* Btn */}
       <div className='btn-wrap'>
-        <SelectBtn value="scissor" img={choice.scissor.img} select={play}/>
-        <SelectBtn value="rock" img={choice.rock.img} select={play}/>
-        <SelectBtn value="paper" img={choice.paper.img} select={play}/>
+        <SelectBtn value="scissor" img={choice.scissor.img} select={play} />
+        <SelectBtn value="rock" img={choice.rock.img} select={play} />
+        <SelectBtn value="paper" img={choice.paper.img} select={play} />
+      </div>
+      <div>
+        <ResetBtn handleReset={handleReset}/>
       </div>
     </div>
   );
