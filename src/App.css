@@ -1,4 +1,6 @@
 .main {
+    background: beige;
+
     width: 100%;
     height: 100vh;
 
@@ -10,14 +12,24 @@
     gap: 10px;
 }
 
-.img-wrap {
+.contents-wrap {
     display: flex;
     gap: 30px;
     /* width: 300px;
     height: 270px; */
 }
 
+.img-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .box {
+    position: relative;
+    background-color: white;
+
     width: 200px;
     height: 250px;
 
@@ -25,10 +37,88 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 3px solid black;
+    border: 10px solid black;
+    border-radius: 30px;
+    box-shadow: 1px 1px 5px 1px gray;
+}
+
+.box>h1 {
+    position: absolute;
+    top: 0px;
+    margin: 0;
+}
+
+.box>h2 {
+    position: absolute;
+    bottom: 0px;
 }
 
 .box>img {
     max-height: 150px;
-    max-width: 150px;
+    max-width: 90px;
+}
+
+.win {
+    border-color: green;
+}
+
+.lose {
+    border-color: red;
+}
+
+.tie {
+    border-color: black;
+}
+
+.box.win>h2 {
+    color: green;
+}
+
+.box.lose>h2 {
+    color: red;
+}
+
+.box.tie>h2 {
+    color: black;
+}
+
+
+/* Button CSS */
+
+.btn-wrap {
+    display: flex;
+    gap: 5px;
+}
+
+.btn {
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+
+    background-color: white;
+}
+
+button:active {
+    background-color: bisque;
+    scale: 90%;
+}
+
+.btn>img {
+    width: 30px;
+}
+
+/* Score */
+.score-wrap {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Reset Btn */
+.reset-btn {
+    cursor: pointer;
+    height: 40px;
+    border-radius: 15px;
+
+    background-color: orange;
 }
